@@ -1,0 +1,184 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Disease;
+use App\Doctor;
+use App\Patient;
+use App\Prescription;
+use App\Therapy;
+use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+
+class SearchController extends Controller
+{
+    public function index()
+    {
+        //getting all the doctors and patients
+        $doctors = Doctor::all();
+        $patients = Patient::all();
+        
+        return view('search.search',compact('doctors', 'patients'));
+    }
+    
+    public function search_result(Request $request)
+    {
+        $pic = 1;
+        $verify = 1;
+        
+        $patients = Patient::all();
+
+        $allPatientTherapy = collect([]);
+
+        if($request->search_type==="1")
+        {
+            $date = 0;
+            if(!empty($request->therapyDate))
+            {
+                $date =1;
+                $verify = 2;
+                foreach ($patients as $patient)
+                {
+                    foreach ($patient->therapies as $therapy)
+                    {
+                        if($therapy->pivot->date===$request->therapyDate)
+                        {
+                            $userId = $therapy->pivot->user_id;
+                            $user = User::find($userId);
+                            if(!empty($user))
+                            {
+                                $userName = $user->name;
+                            }
+                            else
+                            {
+                                $userName = "নাই";
+                            }
+                            $allPatientTherapy->push(['therapy_patientId'=>$therapy->pivot->id, 'patientName'=>$patient->name, 'date'=>$therapy->pivot->date, 'therapyName'=>$therapy->name, 'patientId'=>$patient->id,'amount'=>$therapy->pivot->amount, 'time'=>$therapy->pivot->time, 'userName'=>$userName, 'status'=>$therapy->pivot->status]);
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach ($patients as $patient)
+                {
+                    foreach ($patient->therapies as $therapy)
+                    {
+                        $userId = $therapy->pivot->user_id;
+                        $user = User::find($userId);
+                        if(!empty($user))
+                        {
+                            $userName = $user->name;
+                        }
+                        else
+                        {
+                            $userName = "নাই";
+                        }
+                        $allPatientTherapy->push(['therapy_patientId'=>$therapy->pivot->id, 'patientName'=>$patient->name, 'date'=>$therapy->pivot->date, 'therapyName'=>$therapy->name, 'patientId'=>$patient->id,'amount'=>$therapy->pivot->amount,'time'=>$therapy->pivot->time, 'userName'=>$userName, 'status'=>$therapy->pivot->status]);
+                    }
+                }
+            }
+
+        }
+
+        if($request->search_type==="2")
+        {
+            $pic = 2;
+            $patient = Patient::find($request->patientId);
+
+            return view('search.resultOfIdSearch',compact('patient','pic'));
+
+        }
+
+
+        if($request->search_type==="3")
+        {
+            $date = 0;
+            $doctor=Doctor::find($request->doctor_id);
+            foreach ($doctor->patients as $patient)
+            {
+
+                foreach ($patient->therapies as $therapy)
+                {
+                    $userId = $therapy->pivot->user_id;
+                    $user = Patient::find($userId);
+                    if(!empty($user))
+                    {
+                        $userName = $user->name;
+                    }
+                    else
+                    {
+                        $userName = "নাই";
+                    }
+
+                    $allPatientTherapy->push(['therapy_patientId'=>$therapy->pivot->id, 'patientName'=>$patient->name,'date'=>$therapy->pivot->date,'therapyName'=>$therapy->name,'patientId'=>$patient->id,'amount'=>$therapy->pivot->amount,'time'=>$therapy->pivot->time, 'userName'=>$userName, 'status'=>$therapy->pivot->status]);
+                }
+            }
+        }
+        if($request->search_type==="4")
+        {
+           // $patients=DB::table('patient_therapy')->select('patient_id',DB::raw('SUM(amount) as amount'))->where('date',$request->date)->groupBy('patient_id')->get();
+          //  $numberOfPatients=DB::table('patient_therapy')->where('date',$request->date)->distinct()->count(['patient_id']);
+
+            if(!empty($request->date))
+            {
+                $patients=Patient::where('date',$request->date)->get();
+                $numberOfPatients=count($patients);
+                $date=1;
+            }
+            else
+            {
+                $patients=Patient::orderBy('date', 'DESC')->get();
+                $numberOfPatients=count($patients);
+                $date=0;
+            }
+
+
+            return view('search.dateResult',compact('patients','numberOfPatients','date'));
+        }
+
+        if($request->search_type==="5")
+        {
+            $patient=Patient::find($request->patient);
+
+            $prescription=Prescription::find($request->prescription_id);
+
+            $therapy = $prescription->therapy;
+            $therapyIds = explode(",", $therapy);
+
+            $therapies = collect([]);
+            foreach ($therapyIds as $oneTherapyId)
+            {
+                $oneTherapy = Therapy::find($oneTherapyId);
+                $therapies->push($oneTherapy);
+            }
+
+            $diseaseName = Disease::find($prescription->main_disease);
+            $diseaseName = $diseaseName->name;
+
+            return view('prescription.show',compact('prescription', 'therapies', 'patient','diseaseName'));
+        }
+
+        if($request->search_type==="6")
+        {
+            $patients=Patient::where('phone',$request->phone)->get();
+
+            return view('search.phoneSearchResult',compact('patients'));
+        }
+
+        return view('search.result', compact('allPatientTherapy', 'pic', 'date', 'verify'));
+    }
+
+
+
+    public function searchById($id)
+    {
+        $pic = 2;
+        $patient = Patient::find($id);
+
+        return view('search.resultOfIdSearch', compact('patient', 'pic'));
+    }
+}
+
+

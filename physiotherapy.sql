@@ -1,0 +1,408 @@
+-- phpMyAdmin SQL Dump
+-- version 4.5.1
+-- http://www.phpmyadmin.net
+--
+-- Host: 127.0.0.1
+-- Generation Time: Nov 29, 2017 at 04:59 PM
+-- Server version: 10.1.10-MariaDB
+-- PHP Version: 5.6.19
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `physiotherapy`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `diseases`
+--
+
+CREATE TABLE `diseases` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` int(11) NOT NULL DEFAULT '0',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `diseases`
+--
+
+INSERT INTO `diseases` (`id`, `name`, `parent_id`, `created_at`, `updated_at`) VALUES
+(1, 'Blood pressure', 0, NULL, NULL),
+(2, 'Malnutrition', 0, NULL, NULL),
+(3, 'Under Weight', 2, NULL, NULL),
+(4, 'Main', 0, '2017-11-19 12:26:28', '2017-11-19 12:26:28'),
+(5, 'Sub', 4, '2017-11-19 12:26:43', '2017-11-19 12:26:43'),
+(6, 'Main 2', 0, '2017-11-19 12:27:07', '2017-11-19 12:27:07');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `doctors`
+--
+
+CREATE TABLE `doctors` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `designation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `doctors`
+--
+
+INSERT INTO `doctors` (`id`, `name`, `designation`, `created_at`, `updated_at`) VALUES
+(1, 'ddddddddddddddd', 'vvvvvvv', '2017-11-10 00:11:21', '2017-11-10 00:11:21'),
+(2, 'jsks', 'asal', '2017-11-10 00:12:50', '2017-11-10 00:12:50'),
+(3, 'ahaj', 'akaa', '2017-11-10 00:13:22', '2017-11-10 00:13:22'),
+(4, 'জামাল', 'ডাক্তার', '2017-11-13 01:15:00', '2017-11-13 01:15:00'),
+(5, 'কালাম', 'ডাক্তার', '2017-11-13 01:21:12', '2017-11-13 01:21:12'),
+(6, 'নাজিম', 'প্রফেসর', '2017-11-13 01:21:45', '2017-11-13 01:21:45'),
+(7, 'আমির', 'ডাক্তার', '2017-11-13 01:22:12', '2017-11-13 01:22:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2017_11_08_055200_create_types_table', 1),
+(4, '2017_11_08_055803_create_patients_table', 1),
+(5, '2017_11_08_060456_create_therapies_table', 1),
+(6, '2017_11_08_060927_create_pivot_table', 1),
+(7, '2017_11_10_054316_create_doctors_table', 2),
+(8, '2017_11_19_154233_create_diseases_table', 3),
+(9, '2017_11_19_184350_create_prescriptions_table', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `patients`
+--
+
+CREATE TABLE `patients` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `age` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `phone` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `doctor_id` int(255) NOT NULL,
+  `date` date NOT NULL,
+  `image_path` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `patients`
+--
+
+INSERT INTO `patients` (`id`, `name`, `age`, `phone`, `doctor_id`, `date`, `image_path`, `created_at`, `updated_at`) VALUES
+(1, 'ami', '22', '12345678901', 1, '2017-11-08', '1510150878DSC00131-9.JPG', '2017-11-08 08:21:18', '2017-11-08 08:21:18'),
+(2, 'rahimin', '34', '12345678901', 1, '2017-11-08', '151020583421850303_1857731247585240_66952304_n.jpg', '2017-11-08 23:37:14', '2017-11-08 23:37:14'),
+(3, 'sjsksk', '23', 'aka', 2, '2017-11-08', '151029484121850303_1857731247585240_66952304_n.jpg', '2017-11-10 00:20:41', '2017-11-10 00:20:41'),
+(4, 'আজগর', '২২', '০১৯৮৭৬৭৬৫৪৩', 2, '2017-11-11', '1510405302DSC00131-9 - Copy (4).JPG', '2017-11-11 07:01:42', '2017-11-11 07:01:42'),
+(5, 'জামিন', '22', '09009988987', 4, '2017-11-13', '1510558277Welcome Scan.jpg', '2017-11-13 01:31:17', '2017-11-13 01:31:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `patient_therapy`
+--
+
+CREATE TABLE `patient_therapy` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `patient_id` int(11) NOT NULL,
+  `therapy_id` int(11) NOT NULL,
+  `time` varchar(100) CHARACTER SET utf8 NOT NULL,
+  `date` date NOT NULL,
+  `amount` double NOT NULL,
+  `status` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `patient_therapy`
+--
+
+INSERT INTO `patient_therapy` (`id`, `user_id`, `patient_id`, `therapy_id`, `time`, `date`, `amount`, `status`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 1, '', '2017-11-08', 10000, 1, NULL, NULL),
+(2, 2, 2, 2, '', '2017-11-08', 30000, 0, NULL, NULL),
+(3, 2, 3, 2, '', '2017-11-08', 10000, 0, NULL, NULL),
+(4, 1, 3, 2, '', '2017-11-08', 10000, 1, NULL, NULL),
+(5, 6, 3, 1, '', '2017-11-08', 10000, 1, NULL, NULL),
+(6, 1, 1, 2, '', '2017-11-08', 2000, 1, NULL, NULL),
+(7, 6, 2, 3, '', '2017-11-11', 5000, 0, NULL, NULL),
+(8, 2, 2, 3, '', '2017-11-11', 5000, 0, NULL, NULL),
+(9, 6, 3, 1, '', '2017-11-11', 5660, 1, NULL, NULL),
+(10, 2, 4, 1, '', '2017-11-13', 6000, 1, NULL, NULL),
+(11, 1, 5, 1, '', '2017-11-12', 6000, 1, NULL, NULL),
+(12, 6, 5, 1, '', '2017-11-13', 10000, 1, NULL, NULL),
+(13, 1, 5, 1, '', '2017-11-15', 20000, 1, NULL, NULL),
+(14, 1, 5, 1, 'সকাল 9:50', '2017-11-23', 5500, 1, NULL, NULL),
+(15, 6, 4, 3, 'বিকাল ৩টা', '2017-11-23', 6000, 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `prescriptions`
+--
+
+CREATE TABLE `prescriptions` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `main_disease` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_disease` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `history` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `therapy` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `therapy_details` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `date` date NOT NULL,
+  `patient_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `prescriptions`
+--
+
+INSERT INTO `prescriptions` (`id`, `main_disease`, `sub_disease`, `history`, `therapy`, `therapy_details`, `date`, `patient_id`, `created_at`, `updated_at`) VALUES
+(1, '2', 'Under Weight', 'For 5 years...', 'exactly, avc, empty', '1) ১০ দিন, দুই বেলা করে \r\n2) ৫ দিন, ৪ বেলা করে\r\n3) ১২ দিন, ১ বেলা', '2017-11-20', 5, '2017-11-20 07:16:19', '2017-11-20 07:16:19'),
+(2, '4', 'Sub', 'দীর্ঘ ইতিহাস', 'janina, exactly, empty', '১) দিন দিন \r\n২) প্রতিদিন \r\n৩) সব দিন', '2017-11-20', 4, '2017-11-20 08:45:47', '2017-11-20 08:45:47'),
+(3, '2', 'Under Weight', 'নতুন', 'exactly, avc', '১) প্রতিদিন ২ বার \r\n২) অনেকদিন ২ বার', '2017-11-25', 1, '2017-11-25 01:35:56', '2017-11-25 01:35:56'),
+(4, '2', 'Under Weight', 'নতুন', 'exactly, avc', '১) প্রতিদিন ২ বার \r\n২) অনেকদিন ২ বার', '2017-11-25', 1, '2017-11-25 01:37:09', '2017-11-25 01:37:09'),
+(5, '2', 'Under Weight', 'For 5 years...', 'exactly, avc', '১) সব দিন ৪ বার\r\n২) ৩ দিন ২বার', '2017-11-29', 3, '2017-11-28 12:57:36', '2017-11-28 12:57:36');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `therapies`
+--
+
+CREATE TABLE `therapies` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `therapies`
+--
+
+INSERT INTO `therapies` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'janina', '2017-11-08 23:34:43', '2017-11-08 23:34:43'),
+(2, 'exactly', '2017-11-08 23:34:53', '2017-11-08 23:34:53'),
+(3, 'avc', '2017-11-08 23:35:27', '2017-11-08 23:35:27'),
+(4, 'Dr.alak sjsks', '2017-11-10 00:10:23', '2017-11-10 00:10:23'),
+(5, 'empty', '2017-11-11 10:21:08', '2017-11-11 10:21:08'),
+(6, 'long', '2017-11-13 01:15:22', '2017-11-13 01:15:22'),
+(7, 'mid', '2017-11-13 01:30:08', '2017-11-13 01:30:08'),
+(8, 'jam', '2017-11-13 01:30:17', '2017-11-13 01:30:17');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `types`
+--
+
+CREATE TABLE `types` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `types`
+--
+
+INSERT INTO `types` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', NULL, NULL),
+(2, 'User', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_id` int(11) NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `name`, `email`, `password`, `type_id`, `remember_token`, `created_at`, `updated_at`) VALUES
+(1, 'ami', 'ami@g.com', '$2y$10$9QZRSD39dqKc7nF36jZ.B.MHeGxaeub3q7IEM185bSO3WSEgDyEu2', 1, 'NrDsYYjVvp0hWu7g6BENOd9FcpkWUBTh6lR771uejCOx39rdTFHcLt2Qxddi', '2017-11-08 02:05:45', '2017-11-08 02:05:45'),
+(2, 'Aulipriya Mukhles', 'apromona@yahoo.com', '$2y$10$cgPbUyob13wBy7m62Uotz.C920Y8LcbAy.Aoz3Cp1z6WxXE79yK0O', 2, 'QgTb9vLHNXPvtzQGdfaxZq43N1wt4Z0jD9J3HmSPRNSSjpiMurHnPDgCV22Z', '2017-11-08 03:06:03', '2017-11-23 12:01:41'),
+(6, 'pr', 'pr@gmail.com', '$2y$10$9QZRSD39dqKc7nF36jZ.B.MHeGxaeub3q7IEM185bSO3WSEgDyEu2', 1, 'rb0sRaXQxaDHpEQitAs1qdTlF2h3YNyxkJrkhJhJfARMRkQqezAi09PdXZfZ', NULL, NULL);
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `diseases`
+--
+ALTER TABLE `diseases`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `doctors`
+--
+ALTER TABLE `doctors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patients`
+--
+ALTER TABLE `patients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `patient_therapy`
+--
+ALTER TABLE `patient_therapy`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `prescriptions_patient_id_foreign` (`patient_id`);
+
+--
+-- Indexes for table `therapies`
+--
+ALTER TABLE `therapies`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `types`
+--
+ALTER TABLE `types`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `diseases`
+--
+ALTER TABLE `diseases`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `doctors`
+--
+ALTER TABLE `doctors`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+--
+-- AUTO_INCREMENT for table `patients`
+--
+ALTER TABLE `patients`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `patient_therapy`
+--
+ALTER TABLE `patient_therapy`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+--
+-- AUTO_INCREMENT for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+--
+-- AUTO_INCREMENT for table `therapies`
+--
+ALTER TABLE `therapies`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+--
+-- AUTO_INCREMENT for table `types`
+--
+ALTER TABLE `types`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `prescriptions`
+--
+ALTER TABLE `prescriptions`
+  ADD CONSTRAINT `prescriptions_patient_id_foreign` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
