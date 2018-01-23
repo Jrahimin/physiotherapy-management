@@ -175,11 +175,22 @@
 
 					$('#therapy_id').append(option);
 				},
-				error:function()
-				{
+			});
+		});
 
-				}
+		$('#therapy_id').on('change',function (e) {
+			var patient_id = $('#patient_id').val();
+			var therapy_id=e.target.value;
+			var option='';
+			$('#therapy_id').empty();
+			$.ajax({
 
+				type: "GET",
+				url : "{{url('ajax-therapy-amount')}}",
+				data : {'patient_id':patient_id, 'therapy_id':therapy_id},
+				success : function(data){
+					$('#amount').val(data);
+				},
 			});
 		});
 

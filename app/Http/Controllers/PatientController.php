@@ -76,7 +76,8 @@ class PatientController extends Controller
         $user_id = $request->user_id;
 
         //attaching other attributes for the selected patient having the therapy_id from request
-        $patient->therapies()->attach($request->therapy_id,array('time'=>$time, 'user_id'=>$user_id, 'date'=>$date,'amount'=>$amount, 'status'=>0));
+        $patient->therapies()->attach($request->therapy_id,array('time'=>$time, 'user_id'=>$user_id,
+            'date'=>$date,'amount'=>$amount, 'status'=>0));
         
         $users = User::all();
         $patients=Patient::orderBy('id','DESC')->get();

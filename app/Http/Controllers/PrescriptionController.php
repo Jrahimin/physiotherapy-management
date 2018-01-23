@@ -21,19 +21,18 @@ class PrescriptionController extends Controller
 
     function store(Request $request)
     {
-        $therapies = $request->therapyArray;
-        $therapy = implode(', ', $therapies);
-        $request['therapy'] = $therapy;
+        $i = 0;
         $prescription = Prescription::create($request->all());
-        
-        $therapy = $prescription->therapy;
-        $therapyIds = explode(",", $therapy);
-        $therapies = collect([]);
-        foreach ($therapyIds as $oneTherapyId)
+
+        foreach ($request->therapy_ids as $therapy_id)
         {
-            $oneTherapy = Therapy::find($oneTherapyId);
-            $therapies->push($oneTherapy);
+            $prescription->therapies()->attach($therapy_id, array("therapy_time"=>$request->therapy_times[$i],
+                "therapy_amount"=>$request->therapy_amounts[$i]));
+
+            $i++;
         }
+
+        $therapies = $prescription->therapies;
 
         $diseaseName = Disease::find($request->main_disease);
         $diseaseName = $diseaseName->name;

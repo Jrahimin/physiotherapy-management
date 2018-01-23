@@ -162,13 +162,11 @@
 											$count = 0;
 										?>
 										@foreach($therapies as $therapy)
-												<?php
-													$count++;
-												?>
-												{{$count}}) {{$therapy->name}}
-												@if(!$loop->last)
-													,
-												@endif
+											<?php
+											$count++;
+											?>
+											<br>
+											{{$count}}) {{$therapy->name}} সময়ঃ {{ $therapy->pivot->therapy_time }} পরিমাণঃ {{ $therapy->pivot->therapy_amount }} বার<br>
 										@endforeach
 
 									</p>
@@ -176,6 +174,7 @@
 								
 							</tr>
 							
+{{--
 							<tr>
 								<td colspan="4">
 									<p class="heading">
@@ -188,7 +187,8 @@
 								</td>								
 								
 							</tr>
-					
+--}}
+
 					</table>
 					
 					<br/><br/><br/><br/><br/><br/>

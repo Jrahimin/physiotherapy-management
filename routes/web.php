@@ -91,18 +91,24 @@ Route::get('ajax-prescription-therapy',function (Request $request){
     $patient_id=$request::input(['patient_id']);
     $prescription = \App\Prescription::where('patient_id', $patient_id)->orderBy('id','DESC')->first();
 
-    $therapy = $prescription->therapy;
-    $therapyIds = explode(",", $therapy);
-    $therapies = collect([]);
-    foreach ($therapyIds as $oneTherapyId)
-    {
-        $oneTherapy = Therapy::find($oneTherapyId);
-        $therapies->push($oneTherapy);
-    }
+    $therapies = $prescription->therapies;
     return Response::json($therapies);
 });
 
 Route::get('ajax-therapies', function(Request $request){
    $therapies = Therapy::all();
-    return \Illuminate\Support\Facades\Response::json($therapies);
+    return Response::json($therapies);
+});
+
+Route::get('ajax-therapy-amount', function(Request $request){
+    $patient_id = $request::input(['patient_id']);
+    $therapy_id = $request::input(['therapy_id']);
+    $patient_therapy = DB::table('patient_therapy')->where('patient_id', $patient_id)->where('therapy_id', $therapy_id)
+        ->orderBy('id', 'Desc')->first();
+    if($patient_therapy!=null)
+        $amount = $patient_therapy->amount;
+    else
+        $amount = 0;
+    
+    return Response::json($amount);
 });

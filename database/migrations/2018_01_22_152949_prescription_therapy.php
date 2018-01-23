@@ -13,7 +13,7 @@ class PrescriptionTherapy extends Migration
      */
     public function up()
     {
-        Schema::create('prescription-therapy', function (Blueprint $table) {
+        Schema::create('prescription_therapy', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('prescription_id');
             $table->integer('therapy_id');
