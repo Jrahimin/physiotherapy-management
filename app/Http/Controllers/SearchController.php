@@ -105,27 +105,22 @@ class SearchController extends Controller
         if($request->search_type==="3")
         {
             $date = 0;
+            $totalAmount = 0;
+            $totalPaid = 0;
+            $totalDueOrAdvance = 0;
             $doctor=Doctor::find($request->doctor_id);
+
             foreach ($doctor->patients as $patient)
             {
-
-                foreach ($patient->therapies as $therapy)
+                foreach ($patient->payments as $payment)
                 {
-                    $userId = $therapy->pivot->user_id;
-                    $user = Patient::find($userId);
-                    if(!empty($user))
-                    {
-                        $userName = $user->name;
-                    }
-                    else
-                    {
-                        $userName = "নাই";
-                    }
-
-                    $allPatientTherapy->push(['therapy_patientId'=>$therapy->pivot->id, 'patientName'=>$patient->name,'date'=>$therapy->pivot->date,'therapyName'=>$therapy->name,'patientId'=>$patient->id,'amount'=>$therapy->pivot->amount,'time'=>$therapy->pivot->time, 'userName'=>$userName, 'status'=>$therapy->pivot->status]);
+                    $totalAmount = $totalAmount + $payment->amount;
+                    $totalPaid = $totalPaid + $payment->paid;
+                    $totalDueOrAdvance = $totalDueOrAdvance + $payment->due_or_advance;
                 }
             }
         }
+
         if($request->search_type==="4")
         {
             if(!empty($request->date))
@@ -142,7 +137,7 @@ class SearchController extends Controller
             }
 
 
-            return view('search.dateResult',compact('patients','numberOfPatients','date'));
+            return view('search.dateResult',compact('patients','numberOfPatients','date', 'doctor'));
         }
 
         if($request->search_type==="5")
