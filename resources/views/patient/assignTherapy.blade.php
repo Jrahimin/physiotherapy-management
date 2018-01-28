@@ -80,15 +80,25 @@
 						</div>
 						<br/><br/>
 
-					<div class="form-group">
-						
-						<label for="amount" class="col-md-4 control-label">টাকার পরিমাণ </label>
-					  
-					  <div class="col-md-6">
-                         <input required="required" class="form-control" name="amount" type="text" id="amount"  />       
-                      </div>						
-					</div>
-					 <br/><br/>
+						<div class="form-group">
+
+							<label for="amount" class="col-md-4 control-label">টাকার পরিমাণ </label>
+
+							<div class="col-md-6">
+								<input required="required" class="form-control" name="amount" type="text" id="amount"  />
+							</div>
+						</div>
+						<br/><br/>
+
+						<div class="form-group">
+
+							<label for="paid" class="col-md-4 control-label">পরিশোধ করা টাকা </label>
+
+							<div class="col-md-6">
+								<input required="required" class="form-control" name="paid" type="text" id="paid"  />
+							</div>
+						</div>
+						<br/><br/>
 
 						<input type="hidden" id="date" name="date" value="{{\Carbon\Carbon::now('asia/dacca')->toDateString()}}">
 					
@@ -182,7 +192,6 @@
 			var patient_id = $('#patient_id').val();
 			var therapy_id=e.target.value;
 			var option='';
-			$('#therapy_id').empty();
 			$.ajax({
 
 				type: "GET",

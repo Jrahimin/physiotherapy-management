@@ -76,6 +76,10 @@
 											<td width="34%" class="headtd">তারিখ :</td>
 											<td class="nametd">{{$patient->date}}</td>
 										</tr>
+										<tr>
+											<td width="34%" class="headtd">@if($due_or_advance>0)মোট এডভান্স @else মোট বকেয়া@endif :</td>
+											<td class="nametd">{{$due_or_advance}} টাকা</td>
+										</tr>
 									</table>	
 								
 								</center>
@@ -86,8 +90,8 @@
 					
 					<br/><br/>
 					
-						<div style="width:91.6%;">
-							
+						{{--<div style="width:91.6%;">
+
 							<table width="100%" class="prescriptiontable" style="padding:5px;">
 										
 										<tr>
@@ -141,7 +145,6 @@
 													</p>
 												</td>
 											</tr>
-
 											<tr>
 												<td colspan="4">
 													<p class="heading">
@@ -188,7 +191,7 @@
 										@endforeach
 							</table>
 							
-						</div>
+						</div>--}}
 						
 					</center>
 										
@@ -212,7 +215,7 @@
 										</div>
 
 										<div class="rightresult" >
-													টাকার পরিমাণ<br/>
+													থেরাপি মূল্য<br/>
 										</div>
 
 										<div class="rightresult" style="border-right:none;">

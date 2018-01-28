@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Doctor;
 use App\Patient;
+use App\Payment;
+use App\Prescription;
 use App\Therapy;
 use App\User;
 use Illuminate\Http\Request;
@@ -64,9 +66,17 @@ class PatientController extends Controller
 
     public function assignTherapyStore(Request $request)
     {
+        //get prescription id
+        $prescription = Prescription::where('patient_id', $request->patient_id)->orderBy('id', 'Desc')->first();
+        $request['prescription_id'] = $prescription->id;
+
         //validating data
         $this->validate($request,[
-            'amount'=>'numeric',
+            'amount'=>'required|numeric',
+            'paid'=>'required|numeric',
+            'patient_id'=>'required|integer',
+            'therapy_id'=>'required|integer',
+            'prescription_id'=>'required|integer',
         ]);
         
         $patient=Patient::find($request->patient_id);
@@ -78,7 +88,11 @@ class PatientController extends Controller
         //attaching other attributes for the selected patient having the therapy_id from request
         $patient->therapies()->attach($request->therapy_id,array('time'=>$time, 'user_id'=>$user_id,
             'date'=>$date,'amount'=>$amount, 'status'=>0));
-        
+
+        //Inserting data to payment table
+        $request['due_or_advance'] = $request->paid - $request->amount;
+        $payment = Payment::create($request->all());
+
         $users = User::all();
         $patients=Patient::orderBy('id','DESC')->get();
         $therapies=Therapy::all();

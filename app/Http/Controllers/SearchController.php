@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Disease;
 use App\Doctor;
 use App\Patient;
+use App\Payment;
 use App\Prescription;
 use App\Therapy;
 use App\User;
@@ -87,7 +88,16 @@ class SearchController extends Controller
             $pic = 2;
             $patient = Patient::find($request->patientId);
 
-            return view('search.resultOfIdSearch',compact('patient','pic'));
+            $payments = Payment::where('patient_id', $request->patientId)->get();
+
+
+            $due_or_advance = 0;
+            foreach ($payments as $payment)
+            {
+                $due_or_advance = $due_or_advance + $payment->due_or_advance;
+            }
+
+            return view('search.resultOfIdSearch',compact('patient','pic', 'due_or_advance'));
 
         }
 
@@ -118,9 +128,6 @@ class SearchController extends Controller
         }
         if($request->search_type==="4")
         {
-           // $patients=DB::table('patient_therapy')->select('patient_id',DB::raw('SUM(amount) as amount'))->where('date',$request->date)->groupBy('patient_id')->get();
-          //  $numberOfPatients=DB::table('patient_therapy')->where('date',$request->date)->distinct()->count(['patient_id']);
-
             if(!empty($request->date))
             {
                 $patients=Patient::where('date',$request->date)->get();
@@ -144,15 +151,7 @@ class SearchController extends Controller
 
             $prescription=Prescription::find($request->prescription_id);
 
-            $therapy = $prescription->therapy;
-            $therapyIds = explode(",", $therapy);
-
-            $therapies = collect([]);
-            foreach ($therapyIds as $oneTherapyId)
-            {
-                $oneTherapy = Therapy::find($oneTherapyId);
-                $therapies->push($oneTherapy);
-            }
+            $therapies = $prescription->therapies;
 
             $diseaseName = Disease::find($prescription->main_disease);
             $diseaseName = $diseaseName->name;

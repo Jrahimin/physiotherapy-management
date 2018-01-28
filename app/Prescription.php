@@ -17,4 +17,9 @@ class Prescription extends Model
     {
         return $this->belongsToMany('App\Therapy')->withPivot('therapy_time', 'therapy_amount');
     }
+
+    public function payments()
+    {
+        return $this->hasMany('App\Payment');
+    }
 }
