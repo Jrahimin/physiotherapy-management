@@ -56,7 +56,7 @@
 										<div class="leftresult">
 												রোগীর নাম<br/>
 										</div>
-										
+
 										<div class="leftresult" style="border-right:none;border-left:none;">
 												থেরাপি<br/>
 										</div>
@@ -95,13 +95,13 @@
 
 						$totalAmount=0;
 					?>
-					
+
 				@foreach($allPatientTherapy as $patientTherapy)
 						<tr>
 							<td>
 								<center>
 									<div class="myresultwrapper">
-						
+
 										<div class="leftresult">
 												{{$patientTherapy['patientName']}}
 										</div>
