@@ -104,21 +104,10 @@ class SearchController extends Controller
 
         if($request->search_type==="3")
         {
-            $date = 0;
-            $totalAmount = 0;
-            $totalPaid = 0;
-            $totalDueOrAdvance = 0;
             $doctor=Doctor::find($request->doctor_id);
-
-            foreach ($doctor->patients as $patient)
-            {
-                foreach ($patient->payments as $payment)
-                {
-                    $totalAmount = $totalAmount + $payment->amount;
-                    $totalPaid = $totalPaid + $payment->paid;
-                    $totalDueOrAdvance = $totalDueOrAdvance + $payment->due_or_advance;
-                }
-            }
+            $patients = $doctor->patients;
+            
+            return view('search.searchByDoctor', compact('doctor', 'patients'));
         }
 
         if($request->search_type==="4")
@@ -135,7 +124,6 @@ class SearchController extends Controller
                 $numberOfPatients=count($patients);
                 $date=0;
             }
-
 
             return view('search.dateResult',compact('patients','numberOfPatients','date', 'doctor'));
         }

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 25, 2018 at 08:44 PM
+-- Generation Time: Jan 29, 2018 at 07:34 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -101,7 +101,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (9, '2017_11_19_184350_create_prescriptions_table', 4),
 (10, '2017_12_30_200505_add_fee_to_patients', 5),
 (11, '2018_01_22_152616_remove_fields_from_prescription', 6),
-(12, '2018_01_22_152949_prescription_therapy', 6);
+(12, '2018_01_22_152949_prescription_therapy', 6),
+(14, '2018_01_28_083936_create_payments_table', 7);
 
 -- --------------------------------------------------------
 
@@ -184,7 +185,33 @@ INSERT INTO `patient_therapy` (`id`, `user_id`, `patient_id`, `therapy_id`, `tim
 (13, 1, 5, 1, '', '2017-11-15', 20000, 1, NULL, NULL),
 (14, 1, 5, 1, 'সকাল 9:50', '2017-11-23', 5500, 1, NULL, NULL),
 (15, 6, 4, 3, 'বিকাল ৩টা', '2017-11-23', 6000, 0, NULL, NULL),
-(16, 1, 4, 1, 'সকাল 9:50', '2018-01-19', 10000, 0, NULL, NULL);
+(16, 1, 4, 1, 'সকাল 9:50', '2018-01-19', 10000, 0, NULL, NULL),
+(17, 1, 5, 1, 'বিকাল ৩টা', '2018-01-28', 5500, 0, NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `payments`
+--
+
+CREATE TABLE `payments` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `amount` double NOT NULL,
+  `paid` double NOT NULL,
+  `due_or_advance` double NOT NULL,
+  `therapy_id` int(10) UNSIGNED NOT NULL,
+  `patient_id` int(10) UNSIGNED NOT NULL,
+  `prescription_id` int(10) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `payments`
+--
+
+INSERT INTO `payments` (`id`, `amount`, `paid`, `due_or_advance`, `therapy_id`, `patient_id`, `prescription_id`, `created_at`, `updated_at`) VALUES
+(1, 5500, 6000, 500, 1, 5, 20, '2018-01-28 05:28:53', '2018-01-28 05:28:53');
 
 -- --------------------------------------------------------
 
@@ -381,6 +408,12 @@ ALTER TABLE `patient_therapy`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `payments`
+--
+ALTER TABLE `payments`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
@@ -429,7 +462,7 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `patients`
 --
@@ -439,7 +472,12 @@ ALTER TABLE `patients`
 -- AUTO_INCREMENT for table `patient_therapy`
 --
 ALTER TABLE `patient_therapy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+--
+-- AUTO_INCREMENT for table `payments`
+--
+ALTER TABLE `payments`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `prescriptions`
 --
