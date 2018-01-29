@@ -149,6 +149,13 @@ class SearchController extends Controller
             return view('search.phoneSearchResult',compact('patients'));
         }
 
+        if($request->search_type==="7")
+        {
+            $patients=Patient::where('consultancy_fee',$request->consultancyFee)->orderBy('date','DESC')->get();
+
+            return view('search.consultancyFeeResult',compact('patients'));
+        }
+
         return view('search.result', compact('allPatientTherapy', 'pic', 'date', 'verify'));
     }
 

@@ -3,7 +3,7 @@
 @section('style')
 
 	*{font-family:bangla;}
-	#therapyDiv, #doctorDiv, #patientIdDiv, #dateDiv ,#prescriptionDiv ,#phoneDiv {display:none;}
+	#therapyDiv, #doctorDiv, #patientIdDiv, #dateDiv ,#prescriptionDiv ,#phoneDiv , #consultancyDiv  {display:none;}
 
 @endsection
 
@@ -49,6 +49,7 @@
                             <option value="4">রেজিস্ট্রেশনের তারিখ</option>
 							  <option value="5">প্রেসক্রিপশন</option>
 							  <option value="6">মোবাইল/ফোন</option>
+							  <option value="7">কনসালটেন্সি ফি</option>
                         </select>
                       </div>						
 					</div> <br/><br/>
@@ -137,6 +138,16 @@
 
 							<div class="col-md-6">
 								<input name="phone" id="phone" type="text" /></td>
+							</div>
+						</div>
+						<br/> <br/>
+
+						<div class="form-group searchinput" id="consultancyDiv">
+
+							<label for="consultancyFee" class="col-md-4 control-label">কনসালটেন্সি ফি </label>
+
+							<div class="col-md-6">
+								<input name="consultancyFee" id="consultancyFee" type="text" /></td>
 							</div>
 						</div>
 						<br/> <br/>
