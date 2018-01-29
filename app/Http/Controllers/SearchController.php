@@ -88,11 +88,8 @@ class SearchController extends Controller
             $pic = 2;
             $patient = Patient::find($request->patientId);
 
-            $payments = Payment::where('patient_id', $request->patientId)->get();
-
-
             $due_or_advance = 0;
-            foreach ($payments as $payment)
+            foreach ($patient->payments as $payment)
             {
                 $due_or_advance = $due_or_advance + $payment->due_or_advance;
             }
@@ -166,7 +163,13 @@ class SearchController extends Controller
         $pic = 2;
         $patient = Patient::find($id);
 
-        return view('search.resultOfIdSearch', compact('patient', 'pic'));
+        $due_or_advance = 0;
+        foreach ($patient->payments as $payment)
+        {
+            $due_or_advance = $due_or_advance + $payment->due_or_advance;
+        }
+
+        return view('search.resultOfIdSearch', compact('patient', 'pic', 'due_or_advance'));
     }
 }
 
