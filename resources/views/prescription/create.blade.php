@@ -110,7 +110,7 @@
 
                         <div class="form-group">
 
-                            <label for="therapy_amount" class="col-md-4 control-label">পরিমাণ</label>
+                            <label for="therapy_amount" class="col-md-4 control-label">পরিমাণ (সংখ্যায়)</label>
 
                             <div class="col-md-6">
                                 <input required="required" class="form-control" name="therapy_amounts[]" type="text"/>

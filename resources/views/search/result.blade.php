@@ -144,7 +144,7 @@
 
 											<div class="form-group">
 
-													<input name="submit" type="submit" style="font-size:1em;" value="যাচাই করুন"  class="btn btn-success"/>
+													<input name="submit" type="submit" style="font-size:1em;" value="যাচাইভুক্ত করুন"  class="btn btn-success"/>
 
 											</div>
 												</form>

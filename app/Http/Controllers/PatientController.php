@@ -25,8 +25,9 @@ class PatientController extends Controller
     {
         //validating data sent as request
         $this->validate($request,[
-            'age'=>'numeric',
-            'phone'=>'string|min:11|max:11',
+            'phone'=>'required|string|min:11|max:11',
+            'doctor_id'=>'required|integer',
+            'date'=>'required|date'
         ]);
 
         //getting the file & renaming

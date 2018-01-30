@@ -122,10 +122,12 @@
                                                 মোট রোগী : {{$total}} জন
                                             </div>
 
+                                            <div class="leftresult">
 
+                                            </div>
 
                                             <div class="leftresult">
-                                                মোট টাকার পরিমাণ :  {{$total_amount}}
+                                                মোট:  {{$total_amount}} টাকা
                                             </div>
 
 
