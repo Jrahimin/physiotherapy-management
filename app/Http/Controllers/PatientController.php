@@ -67,7 +67,7 @@ class PatientController extends Controller
 
     public function assignTherapyStore(Request $request)
     {
-        //get prescription id
+        //get last prescription
         $prescription = Prescription::where('patient_id', $request->patient_id)->orderBy('id', 'Desc')->first();
         $request['prescription_id'] = $prescription->id;
 
@@ -76,7 +76,6 @@ class PatientController extends Controller
             'amount'=>'required|numeric',
             'paid'=>'required|numeric',
             'patient_id'=>'required|integer',
-            'therapy_id'=>'required|integer',
             'prescription_id'=>'required|integer',
         ]);
         
@@ -86,9 +85,12 @@ class PatientController extends Controller
         $time = $request->time;
         $user_id = $request->user_id;
 
-        //attaching other attributes for the selected patient having the therapy_id from request
-        $patient->therapies()->attach($request->therapy_id,array('time'=>$time, 'user_id'=>$user_id,
-            'date'=>$date,'amount'=>$amount, 'status'=>0));
+        foreach ($prescription->therapies as $therapy)
+        {
+            //attaching other attributes for the selected patient having the therapy_id from request
+            $patient->therapies()->attach($therapy->id,array('time'=>$time, 'user_id'=>$user_id,
+                'date'=>$date,'amount'=>$amount, 'status'=>0));
+        }
 
         //Inserting data to payment table
         $request['due_or_advance'] = $request->paid - $request->amount;

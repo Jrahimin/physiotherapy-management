@@ -87,12 +87,21 @@ Route::get('ajax-prescription',function (Request $request){
     return Response::json($prescriptions);
 });
 Route::get('ajax-prescription-therapy',function (Request $request){
-
     $patient_id=$request::input(['patient_id']);
     $prescription = \App\Prescription::where('patient_id', $patient_id)->orderBy('id','DESC')->first();
-
     $therapies = $prescription->therapies;
-    return Response::json($therapies);
+
+    $patient = \App\Patient::find($patient_id);
+    $payments = $patient->payments;
+    $totalAmount = 0;
+    foreach ($payments as $payment)
+    {
+        $totalAmount = $totalAmount + $payment->amount;
+    }
+
+    
+
+    return Response::json(["therapies"=>$therapies, "totalAmount"=>$totalAmount]);
 });
 
 Route::get('ajax-therapies', function(Request $request){

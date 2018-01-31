@@ -63,10 +63,8 @@
 						
 						<label for="therapy_id" class="col-md-4 control-label">থেরাপির নাম</label>
 					  
-					  <div class="col-md-6">
-                         <select name="therapy_id" id="therapy_id">
-                        	<option value="">--বাছাই করুন-- </option>
-						 </select>
+					  <div class="col-md-6" id="therapyDiv">
+							<p style="font-weight: bold"></p>
                       </div>						
 					</div> <br/><br/>
 
@@ -167,42 +165,28 @@
 
 		$('#patient_id').on('change',function (e) {
 			var patient_id=e.target.value;
-			var option='';
-			$('#therapy_id').empty();
+			var therapyContent='';
+			var therapyIdContent = '';
+			$('#therapyDiv p').empty();
 			$.ajax({
 
 				type: "GET",
 				url : "{{url('ajax-prescription-therapy')}}",
 				data : {'patient_id':patient_id},
 				success : function(data){
-					//  console.log('success');
-					console.log(data);
-					option+='<option value="" selected disabled>--বাছাই করুন--</option>';
-					for(var i=0;i<data.length;i++)
-					{ console.log(data[i]);
-						option+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
+
+					for(var i=0;i<data.therapies.length;i++)
+					{
+						var count = i+1;
+						therapyContent+= count+") "+data.therapies[i].name+" ";
+						therapyIdContent+= '<input type="hidden" name='
 					}
 
-					$('#therapy_id').append(option);
+					$('#therapyDiv p').append(therapyContent);
+					$('#amount').val(data.totalAmount);
 				},
 			});
 		});
-
-		$('#therapy_id').on('change',function (e) {
-			var patient_id = $('#patient_id').val();
-			var therapy_id=e.target.value;
-			var option='';
-			$.ajax({
-
-				type: "GET",
-				url : "{{url('ajax-therapy-amount')}}",
-				data : {'patient_id':patient_id, 'therapy_id':therapy_id},
-				success : function(data){
-					$('#amount').val(data);
-				},
-			});
-		});
-
 
 	</script>
 @endsection

@@ -18,7 +18,6 @@ class CreatePaymentsTable extends Migration
             $table->double('amount');
             $table->double('paid');
             $table->double('due_or_advance');
-            $table->integer('therapy_id')->unsigned();
             $table->integer('patient_id')->unsigned();
             $table->integer('prescription_id')->unsigned();
             $table->timestamps();
