@@ -6,7 +6,7 @@
 	.resultwrapper{width:92%;background:rgb(20,103,171);color:white;font-weight:bold;font-size:1.3em;}
 	.myresultwrapper{width:92%;background:white;color:black;font-size:1.3em;border:solid 1px rgb(100,100,100);border-top:none;}
 	.leftresult{float:left;}.rightresult{float:right;}
-	.leftresult, .rightresult{width:16%;padding:8px 0;}
+		.leftresult, .rightresult{width:16%;padding:8px 0;}
 	.mywrapper{width:70%;padding:80px 0;background:white;border-radius:20px;margin:0 auto;}
 	.myresultdiv{width:92%;background:white;color:black;border-top:none;border-radius:8px;}
 	.idpara{display:inline-block;border:solid 1px black;border-radius:5px;padding:3px;}	.printbutton{width:80px;color:white;background:rgb(34,103,179);border-radius:5px;font-size:1.2em;padding:8px;cursor:pointer;}	
@@ -29,7 +29,7 @@
 				@if($date===1)
 				@foreach($payments as $payment)
 						<p style="display:inline;font-size:1.6em;">থেরাপির তারিখ ও সময়: </p>
-						<h4 style="display:inline;font-style:underline;">{{ $payment->date }} ({{ $payment->time }})</h4>
+						<h4 style="display:inline;font-style:underline;">{{ $payment->date }}</h4>
 					@break
 				@endforeach
 				@endif
@@ -133,9 +133,9 @@
 										@if($verify==2)
 										<div class="rightresult">
 												@if($payment->status==0)
-												{!! Form::open(['method'=>'POST','action'=>'SearchController@assignTherapyStatus']) !!}
+												{!! Form::open(['method'=>'POST','action'=>'PatientController@assignTherapyStatus']) !!}
 												{{ csrf_field() }}
-														<input type="hidden" name="search_type" value="5">
+														<input type="hidden" name="payment_id" id="payment_id" value="{{$payment->id}}">
 
 											<div class="form-group">
 
