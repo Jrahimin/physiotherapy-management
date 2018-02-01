@@ -161,7 +161,7 @@
 											
 											<li style="padding:0;">
 												<a  style="color:white;background:rgb(30,87,134);" href="{{url('patient/assignTherapy')}}">
-															রোগীকে প্রদেয় থেরাপি
+															রোগীকে প্রদানকৃত থেরাপি
 												</a>
 											</li>
 											

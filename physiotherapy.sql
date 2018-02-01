@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 29, 2018 at 07:34 PM
+-- Generation Time: Feb 01, 2018 at 11:20 PM
 -- Server version: 10.1.10-MariaDB
 -- PHP Version: 5.6.19
 
@@ -102,7 +102,9 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (10, '2017_12_30_200505_add_fee_to_patients', 5),
 (11, '2018_01_22_152616_remove_fields_from_prescription', 6),
 (12, '2018_01_22_152949_prescription_therapy', 6),
-(14, '2018_01_28_083936_create_payments_table', 7);
+(14, '2018_01_28_083936_create_payments_table', 7),
+(15, '2018_02_01_181540_alter_patient_therapies_fields', 8),
+(18, '2018_02_01_191557_add_date_to_payment', 9);
 
 -- --------------------------------------------------------
 
@@ -144,7 +146,7 @@ INSERT INTO `patients` (`id`, `name`, `age`, `phone`, `doctor_id`, `date`, `imag
 (2, 'rahimin', '34', '12345678901', 1, '2017-11-08', '151020583421850303_1857731247585240_66952304_n.jpg', '2017-11-08 23:37:14', '2017-11-08 23:37:14', 0),
 (3, 'sjsksk', '23', 'aka', 2, '2017-11-08', '151029484121850303_1857731247585240_66952304_n.jpg', '2017-11-10 00:20:41', '2017-11-10 00:20:41', 0),
 (4, 'আজগর', '২২', '০১৯৮৭৬৭৬৫৪৩', 2, '2017-11-11', '1510405302DSC00131-9 - Copy (4).JPG', '2017-11-11 07:01:42', '2017-11-11 07:01:42', 0),
-(5, 'জামিন', '22', '09009988987', 4, '2017-11-13', '1510558277Welcome Scan.jpg', '2017-11-13 01:31:17', '2017-11-13 01:31:17', 0);
+(5, 'জামিন', '22', '09009988987', 4, '2017-11-13', '1510558277Welcome Scan.jpg', '2017-11-13 01:31:17', '2017-11-13 01:31:17', 500);
 
 -- --------------------------------------------------------
 
@@ -159,34 +161,21 @@ CREATE TABLE `patient_therapy` (
   `therapy_id` int(11) NOT NULL,
   `time` varchar(100) CHARACTER SET utf8 NOT NULL,
   `date` date NOT NULL,
-  `amount` double NOT NULL,
   `status` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `payment_id` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `patient_therapy`
 --
 
-INSERT INTO `patient_therapy` (`id`, `user_id`, `patient_id`, `therapy_id`, `time`, `date`, `amount`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 1, 1, '', '2017-11-08', 10000, 1, NULL, NULL),
-(2, 2, 2, 2, '', '2017-11-08', 30000, 0, NULL, NULL),
-(3, 2, 3, 2, '', '2017-11-08', 10000, 0, NULL, NULL),
-(4, 1, 3, 2, '', '2017-11-08', 10000, 1, NULL, NULL),
-(5, 6, 3, 1, '', '2017-11-08', 10000, 1, NULL, NULL),
-(6, 1, 1, 2, '', '2017-11-08', 2000, 1, NULL, NULL),
-(7, 6, 2, 3, '', '2017-11-11', 5000, 0, NULL, NULL),
-(8, 2, 2, 3, '', '2017-11-11', 5000, 0, NULL, NULL),
-(9, 6, 3, 1, '', '2017-11-11', 5660, 1, NULL, NULL),
-(10, 2, 4, 1, '', '2017-11-13', 6000, 1, NULL, NULL),
-(11, 1, 5, 1, '', '2017-11-12', 6000, 1, NULL, NULL),
-(12, 6, 5, 1, '', '2017-11-13', 10000, 1, NULL, NULL),
-(13, 1, 5, 1, '', '2017-11-15', 20000, 1, NULL, NULL),
-(14, 1, 5, 1, 'সকাল 9:50', '2017-11-23', 5500, 1, NULL, NULL),
-(15, 6, 4, 3, 'বিকাল ৩টা', '2017-11-23', 6000, 0, NULL, NULL),
-(16, 1, 4, 1, 'সকাল 9:50', '2018-01-19', 10000, 0, NULL, NULL),
-(17, 1, 5, 1, 'বিকাল ৩টা', '2018-01-28', 5500, 0, NULL, NULL);
+INSERT INTO `patient_therapy` (`id`, `user_id`, `patient_id`, `therapy_id`, `time`, `date`, `status`, `created_at`, `updated_at`, `payment_id`) VALUES
+(3, 7, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 6),
+(4, 7, 5, 7, 'বিকাল', '2018-02-02', 0, NULL, NULL, 6),
+(5, 7, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 7),
+(6, 7, 5, 7, 'বিকাল', '2018-02-02', 0, NULL, NULL, 7);
 
 -- --------------------------------------------------------
 
@@ -199,19 +188,23 @@ CREATE TABLE `payments` (
   `amount` double NOT NULL,
   `paid` double NOT NULL,
   `due_or_advance` double NOT NULL,
-  `therapy_id` int(10) UNSIGNED NOT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
   `prescription_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `date` date NOT NULL,
+  `time` varchar(150) CHARACTER SET utf8 NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `status` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `payments`
 --
 
-INSERT INTO `payments` (`id`, `amount`, `paid`, `due_or_advance`, `therapy_id`, `patient_id`, `prescription_id`, `created_at`, `updated_at`) VALUES
-(1, 5500, 6000, 500, 1, 5, 20, '2018-01-28 05:28:53', '2018-01-28 05:28:53');
+INSERT INTO `payments` (`id`, `amount`, `paid`, `due_or_advance`, `patient_id`, `prescription_id`, `created_at`, `updated_at`, `date`, `time`, `user_id`, `status`) VALUES
+(6, 22000, 18000, -4000, 5, 23, '2018-02-01 15:25:05', '2018-02-01 15:25:05', '2018-02-02', 'বিকাল', 7, 0),
+(7, 22000, 23000, 1000, 5, 23, '2018-02-01 15:25:30', '2018-02-01 15:25:30', '2018-02-02', 'বিকাল', 7, 0);
 
 -- --------------------------------------------------------
 
@@ -221,8 +214,8 @@ INSERT INTO `payments` (`id`, `amount`, `paid`, `due_or_advance`, `therapy_id`, 
 
 CREATE TABLE `prescriptions` (
   `id` int(10) UNSIGNED NOT NULL,
-  `main_disease` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sub_disease` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `main_disease_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_disease_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `history` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `date` date NOT NULL,
   `patient_id` int(10) UNSIGNED NOT NULL,
@@ -234,27 +227,14 @@ CREATE TABLE `prescriptions` (
 -- Dumping data for table `prescriptions`
 --
 
-INSERT INTO `prescriptions` (`id`, `main_disease`, `sub_disease`, `history`, `date`, `patient_id`, `created_at`, `updated_at`) VALUES
-(1, '2', 'Under Weight', 'For 5 years...', '2017-11-20', 5, '2017-11-20 07:16:19', '2017-11-20 07:16:19'),
-(2, '4', 'Sub', 'দীর্ঘ ইতিহাস', '2017-11-20', 4, '2017-11-20 08:45:47', '2017-11-20 08:45:47'),
-(3, '2', 'Under Weight', 'নতুন', '2017-11-25', 1, '2017-11-25 01:35:56', '2017-11-25 01:35:56'),
-(4, '2', 'Under Weight', 'নতুন', '2017-11-25', 1, '2017-11-25 01:37:09', '2017-11-25 01:37:09'),
-(5, '2', 'Under Weight', 'For 5 years...', '2017-11-29', 3, '2017-11-28 12:57:36', '2017-11-28 12:57:36'),
-(6, '2', '3', 'For 5 years...', '2018-01-14', 2, '2018-01-14 06:24:47', '2018-01-14 06:24:47'),
-(7, '2', '3', '6666', '2018-01-14', 2, '2018-01-14 07:05:35', '2018-01-14 07:05:35'),
-(8, '2', '3', 'পুরনো', '2018-01-19', 4, '2018-01-18 14:10:08', '2018-01-18 14:10:08'),
-(9, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:05:33', '2018-01-23 12:05:33'),
-(10, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:08:16', '2018-01-23 12:08:16'),
-(11, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:11:10', '2018-01-23 12:11:10'),
-(12, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:15:47', '2018-01-23 12:15:47'),
-(13, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:19:47', '2018-01-23 12:19:47'),
-(14, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:25:06', '2018-01-23 12:25:06'),
-(15, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:27:25', '2018-01-23 12:27:25'),
-(16, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:28:07', '2018-01-23 12:28:07'),
-(17, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:28:28', '2018-01-23 12:28:28'),
-(18, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:28:39', '2018-01-23 12:28:39'),
-(19, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:29:34', '2018-01-23 12:29:34'),
-(20, '2', '3', 'jkkjhkkk', '2018-01-23', 5, '2018-01-23 12:30:18', '2018-01-23 12:30:18');
+INSERT INTO `prescriptions` (`id`, `main_disease_id`, `sub_disease_id`, `history`, `date`, `patient_id`, `created_at`, `updated_at`) VALUES
+(21, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 14:48:54', '2018-02-01 14:48:54'),
+(22, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 14:49:23', '2018-02-01 14:49:23'),
+(23, '2', '3', 'long time', '2018-02-02', 5, '2018-02-01 15:24:29', '2018-02-01 15:24:29'),
+(24, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:48:16', '2018-02-01 15:48:16'),
+(25, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:48:44', '2018-02-01 15:48:44'),
+(26, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:49:16', '2018-02-01 15:49:16'),
+(27, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:49:27', '2018-02-01 15:49:27');
 
 -- --------------------------------------------------------
 
@@ -277,26 +257,16 @@ CREATE TABLE `prescription_therapy` (
 --
 
 INSERT INTO `prescription_therapy` (`id`, `prescription_id`, `therapy_id`, `therapy_time`, `therapy_amount`, `created_at`, `updated_at`) VALUES
-(1, 11, 1, 'lhljl', 5, NULL, NULL),
-(2, 11, 2, 'lhlklj', 6, NULL, NULL),
-(3, 12, 1, 'lhljl', 5, NULL, NULL),
-(4, 12, 2, 'lhlklj', 6, NULL, NULL),
-(5, 13, 1, 'lhljl', 5, NULL, NULL),
-(6, 13, 2, 'lhlklj', 6, NULL, NULL),
-(7, 14, 1, 'lhljl', 5, NULL, NULL),
-(8, 14, 2, 'lhlklj', 6, NULL, NULL),
-(9, 15, 1, 'lhljl', 5, NULL, NULL),
-(10, 15, 2, 'lhlklj', 6, NULL, NULL),
-(11, 16, 1, 'lhljl', 5, NULL, NULL),
-(12, 16, 2, 'lhlklj', 6, NULL, NULL),
-(13, 17, 1, 'lhljl', 5, NULL, NULL),
-(14, 17, 2, 'lhlklj', 6, NULL, NULL),
-(15, 18, 1, 'lhljl', 5, NULL, NULL),
-(16, 18, 2, 'lhlklj', 6, NULL, NULL),
-(17, 19, 1, 'lhljl', 5, NULL, NULL),
-(18, 19, 2, 'lhlklj', 6, NULL, NULL),
-(19, 20, 1, 'lhljl', 5, NULL, NULL),
-(20, 20, 2, 'lhlklj', 6, NULL, NULL);
+(24, 23, 3, 'বিকাল', 2, NULL, NULL),
+(25, 23, 7, 'বিকাল ৪টা', 4, NULL, NULL),
+(26, 24, 2, 'বিকাল ৪টা', 3, NULL, NULL),
+(27, 24, 3, 'বিকাল ৪টা', 2, NULL, NULL),
+(28, 25, 2, 'বিকাল ৪টা', 3, NULL, NULL),
+(29, 25, 3, 'বিকাল ৪টা', 2, NULL, NULL),
+(30, 26, 2, 'বিকাল ৪টা', 3, NULL, NULL),
+(31, 26, 3, 'বিকাল ৪টা', 2, NULL, NULL),
+(32, 27, 2, 'বিকাল ৪টা', 3, NULL, NULL),
+(33, 27, 3, 'বিকাল ৪টা', 2, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -462,7 +432,7 @@ ALTER TABLE `doctors`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT for table `patients`
 --
@@ -472,22 +442,22 @@ ALTER TABLE `patients`
 -- AUTO_INCREMENT for table `patient_therapy`
 --
 ALTER TABLE `patient_therapy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 --
 -- AUTO_INCREMENT for table `prescription_therapy`
 --
 ALTER TABLE `prescription_therapy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
 --
 -- AUTO_INCREMENT for table `therapies`
 --

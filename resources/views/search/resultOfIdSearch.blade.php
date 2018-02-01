@@ -235,12 +235,7 @@
 						$totalAmount=0;
 						?>
 
-						@foreach($patient->therapies as $therapy)
-							<?php
-							$userId = $therapy->pivot->user_id;
-							$user = App\User::find($userId);
-							$userName = $user->name;
-							?>
+						@foreach($patient->payments as $payment)
 							<tr>
 								<td>
 									<center>
@@ -248,23 +243,25 @@
 
 
 											<div class="leftresult">
-												{{$therapy->name}}
+												@foreach($payment->prescription->therapies as $therapy)
+													{{$therapy->name}},
+												@endforeach
 											</div>
 
 											<div class="leftresult">
-												{{$userName}}
+												{{$payment->user->name}}
 											</div>
 
 											<div class="rightresult">
-												{{$therapy->pivot->amount}}
+												{{$payment->amount}}
 											</div>
 
 											<div class="rightresult">
-												{{$therapy->pivot->date}} ({{$therapy->pivot->time}})
+												{{$payment->date}} ({{$payment->time}})
 											</div>
 											<?php
 
-												$totalAmount=$totalAmount+$therapy->pivot->amount;
+												$totalAmount=$totalAmount+$payment->amount;
 											?>
 
 

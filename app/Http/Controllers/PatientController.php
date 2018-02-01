@@ -78,10 +78,14 @@ class PatientController extends Controller
             'patient_id'=>'required|integer',
             'prescription_id'=>'required|integer',
         ]);
-        
+
+        //Inserting data to payment table
+        $request['due_or_advance'] = $request->paid - $request->amount;
+        $request['status'] = 0;
+        $payment = Payment::create($request->all());
+
         $patient=Patient::find($request->patient_id);
         $date=$request->date;
-        $amount=$request->amount;
         $time = $request->time;
         $user_id = $request->user_id;
 
@@ -89,12 +93,8 @@ class PatientController extends Controller
         {
             //attaching other attributes for the selected patient having the therapy_id from request
             $patient->therapies()->attach($therapy->id,array('time'=>$time, 'user_id'=>$user_id,
-                'date'=>$date,'amount'=>$amount, 'status'=>0));
+                'date'=>$date, 'status'=>0, 'payment_id'=>$payment->id));
         }
-
-        //Inserting data to payment table
-        $request['due_or_advance'] = $request->paid - $request->amount;
-        $payment = Payment::create($request->all());
 
         $users = User::all();
         $patients=Patient::orderBy('id','DESC')->get();
@@ -112,7 +112,7 @@ class PatientController extends Controller
     
     public function assignTherapyStatus(Request $request)
     {
-        DB::table('patient_therapy')->where('id', $request->therapy_patientId)->update(['status'=>1]);
+        DB::table('payments')->where('id', $request->payment_id)->update(['status'=>1]);
 
         return redirect('search');
     }

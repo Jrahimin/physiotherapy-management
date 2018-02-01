@@ -117,7 +117,7 @@
 									</p>
 									&nbsp;
 									<p class="desc">
-										{{$diseaseName}}
+										{{$prescription->main_disease->name}}
 									</p>
 								</td>
 								
@@ -127,7 +127,7 @@
 									</p>
 									&nbsp;
 									<p class="desc">
-										{{$prescription->sub_disease}}
+										{{$prescription->sub_disease->name}}
 									</p>
 								</td>								
 							</tr>

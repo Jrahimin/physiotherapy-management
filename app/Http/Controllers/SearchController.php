@@ -39,47 +39,15 @@ class SearchController extends Controller
             {
                 $date =1;
                 $verify = 2;
-                foreach ($patients as $patient)
-                {
-                    foreach ($patient->therapies as $therapy)
-                    {
-                        if($therapy->pivot->date===$request->therapyDate)
-                        {
-                            $userId = $therapy->pivot->user_id;
-                            $user = User::find($userId);
-                            if(!empty($user))
-                            {
-                                $userName = $user->name;
-                            }
-                            else
-                            {
-                                $userName = "নাই";
-                            }
-                            $allPatientTherapy->push(['therapy_patientId'=>$therapy->pivot->id, 'patientName'=>$patient->name, 'date'=>$therapy->pivot->date, 'therapyName'=>$therapy->name, 'patientId'=>$patient->id,'amount'=>$therapy->pivot->amount, 'time'=>$therapy->pivot->time, 'userName'=>$userName, 'status'=>$therapy->pivot->status]);
-                        }
-                    }
-                }
+
+                $payments = Payment::where('date', $request->therapyDate)->get();
             }
             else
             {
-                foreach ($patients as $patient)
-                {
-                    foreach ($patient->therapies as $therapy)
-                    {
-                        $userId = $therapy->pivot->user_id;
-                        $user = User::find($userId);
-                        if(!empty($user))
-                        {
-                            $userName = $user->name;
-                        }
-                        else
-                        {
-                            $userName = "নাই";
-                        }
-                        $allPatientTherapy->push(['therapy_patientId'=>$therapy->pivot->id, 'patientName'=>$patient->name, 'date'=>$therapy->pivot->date, 'therapyName'=>$therapy->name, 'patientId'=>$patient->id,'amount'=>$therapy->pivot->amount,'time'=>$therapy->pivot->time, 'userName'=>$userName, 'status'=>$therapy->pivot->status]);
-                    }
-                }
+                $payments = Payment::all();
             }
+
+            return view('search.result', compact('payments','allPatientTherapy', 'pic', 'date', 'verify'));
 
         }
 
@@ -133,10 +101,7 @@ class SearchController extends Controller
 
             $therapies = $prescription->therapies;
 
-            $diseaseName = Disease::find($prescription->main_disease);
-            $diseaseName = $diseaseName->name;
-
-            return view('prescription.show',compact('prescription', 'therapies', 'patient','diseaseName'));
+            return view('prescription.show',compact('prescription', 'therapies', 'patient'));
         }
 
         if($request->search_type==="6")
@@ -152,8 +117,7 @@ class SearchController extends Controller
 
             return view('search.consultancyFeeResult',compact('patients'));
         }
-
-        return view('search.result', compact('allPatientTherapy', 'pic', 'date', 'verify'));
+        
     }
 
 

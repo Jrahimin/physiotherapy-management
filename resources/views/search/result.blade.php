@@ -6,11 +6,7 @@
 	.resultwrapper{width:92%;background:rgb(20,103,171);color:white;font-weight:bold;font-size:1.3em;}
 	.myresultwrapper{width:92%;background:white;color:black;font-size:1.3em;border:solid 1px rgb(100,100,100);border-top:none;}
 	.leftresult{float:left;}.rightresult{float:right;}
-	@if($date===1)
-		.leftresult, .rightresult{width:16%;padding:8px 0;}
-	@elseif($date===0)
-		.leftresult, .rightresult{width:16%;padding:8px 0;}
-	@endif
+	.leftresult, .rightresult{width:16%;padding:8px 0;}
 	.mywrapper{width:70%;padding:80px 0;background:white;border-radius:20px;margin:0 auto;}
 	.myresultdiv{width:92%;background:white;color:black;border-top:none;border-radius:8px;}
 	.idpara{display:inline-block;border:solid 1px black;border-radius:5px;padding:3px;}	.printbutton{width:80px;color:white;background:rgb(34,103,179);border-radius:5px;font-size:1.2em;padding:8px;cursor:pointer;}	
@@ -31,9 +27,9 @@
 				<center><h2 style="padding-top:14px;">খোঁজের ফলাফল</h2>
 			<hr/>
 				@if($date===1)
-				@foreach($allPatientTherapy as $patientTherapy)
+				@foreach($payments as $payment)
 						<p style="display:inline;font-size:1.6em;">থেরাপির তারিখ ও সময়: </p>
-						<h4 style="display:inline;font-style:underline;">{{$patientTherapy['date']}} ({{$patientTherapy['time']}})</h4>
+						<h4 style="display:inline;font-style:underline;">{{ $payment->date }} ({{ $payment->time }})</h4>
 					@break
 				@endforeach
 				@endif
@@ -41,10 +37,7 @@
 			
 			<br/><br/>
 
-				@if(!$allPatientTherapy->isEmpty())
-					@if($pic==2)
-						<img src="{{asset('image')}}/{{$allPatientTherapy[0]['image_path']}}" style="width: 140px; height: 180px; margin-left: 6%; margin-bottom: 3%">
-					@endif
+				@if($payments)
 			<center>
 				<table width="90%">
 					<tr>
@@ -96,36 +89,38 @@
 						$totalAmount=0;
 					?>
 
-				@foreach($allPatientTherapy as $patientTherapy)
+				@foreach($payments as $payment)
 						<tr>
 							<td>
 								<center>
 									<div class="myresultwrapper">
 
 										<div class="leftresult">
-												{{$patientTherapy['patientName']}}
+												{{$payment->patient->name}}
 										</div>
 										
 										<div class="leftresult">
-												{{$patientTherapy['therapyName']}}
-											@if($patientTherapy['status']==1) <img style="width: 14%; height: 14%;" src="{{asset("ok.png")}}"> @endif
+												@foreach($payment->prescription->therapies as $therapy)
+													{{$therapy->name}},
+												@endforeach
+											@if($payment->status==1) <img style="width: 14%; height: 14%;" src="{{asset("ok.png")}}"> @endif
 										</div>
 
 										<div class="leftresult">
-											{{$patientTherapy['userName']}}
+											{{$payment->user->name}}
 										</div>
 
 									<?php
-										$patientId=$patientTherapy['patientId'];
+										$patientId=$payment->patient->id;
 										?>
 										
 										<div class="rightresult">
-											{{$patientTherapy['amount']}}
+											{{$payment->amount}}
 										</div>
 
 										@if($date===0)
 										<div class="rightresult">
-												{{$patientTherapy['date']}}
+												{{$payment->date}}
 										</div>
 										@endif
 
@@ -137,10 +132,10 @@
 
 										@if($verify==2)
 										<div class="rightresult">
-												@if($patientTherapy['status']==0)
-												{!! Form::open(['method'=>'POST','action'=>'PatientController@assignTherapyStatus']) !!}
+												@if($payment->status==0)
+												{!! Form::open(['method'=>'POST','action'=>'SearchController@assignTherapyStatus']) !!}
 												{{ csrf_field() }}
-														<input type="hidden" name="therapy_patientId" id="therapy_patientId" value="{{$patientTherapy['therapy_patientId']}}">
+														<input type="hidden" name="search_type" value="5">
 
 											<div class="form-group">
 
@@ -156,8 +151,7 @@
 										
 										
 										<?php
-										$totalAmount=$totalAmount+$patientTherapy['amount'];
-
+										$totalAmount= $totalAmount+ $payment->amount;
 										?>
 									
 									</div>

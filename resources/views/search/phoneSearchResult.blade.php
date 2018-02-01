@@ -137,7 +137,7 @@
 									</p>
 									&nbsp;
 									<p class="desc">
-										{{$prescription->main_disease}}
+										{{$prescription->main_disease->name}}
 									</p>
 								</td>
 
@@ -147,7 +147,7 @@
 									</p>
 									&nbsp;
 									<p class="desc">
-										{{$prescription->sub_disease}}
+										{{$prescription->sub_disease->name}}
 									</p>
 								</td>								
 							</tr>
@@ -177,28 +177,24 @@
 										থেরাপিসমূহ :
 									</p>
 									&nbsp;
-									<p class="desc">
-										{{$prescription->therapy}}
+									<p class="desc" style="display:inline;">
+										<?php
+										$count = 0;
+										?>
+										@foreach($prescription->therapies as $therapy)
+											<?php
+											$count++;
+											?>
+											<br>
+											{{$count}}) {{$therapy->name}} সময়ঃ {{ $therapy->pivot->therapy_time }} পরিমাণঃ {{ $therapy->pivot->therapy_amount }} বার<br>
+										@endforeach
 									</p>
 								</td>								
 								
 							</tr>
-							
-							<tr>
-								<td colspan="4">
-									<p class="heading">
-										থেরাপির সময় ও পরিমাণ :
-									</p>
-									&nbsp;
-									<p class="desc">
-										{{$prescription->therapy_details}}
-									</p>
-									<hr/>
-								</td>
-							</tr>
 						@endforeach
 
-						<tr>
+{{--						<tr>
 							<td><h3 style="margin-left: 1%;"><b>থেরাপি সমূহ</b></h3></td>
 						</tr>
 						@foreach($patient->therapies as $therapy)						
@@ -225,13 +221,13 @@
 									</p>
 								</td>								
 							</tr>						
-							@endforeach
+							@endforeach--}}
 						
 					
 					</table>
 							</td>                    
 						</tr>
-						
+
 						<tr>
 							<td>
 								<br/><br/><br/>
@@ -240,11 +236,11 @@
 
 
 					</table>
-					
+
 					@endforeach
 
 				</center>
-					
+
 					<br/><br/>
                      
 					 <form>

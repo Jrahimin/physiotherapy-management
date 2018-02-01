@@ -15,8 +15,8 @@ class CreatePrescriptionsTable extends Migration
     {
         Schema::create('prescriptions', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('main_disease');
-            $table->string('sub_disease')->nullable();
+            $table->string('main_disease_id');
+            $table->string('sub_disease_id')->nullable();
             $table->string('history');
             $table->string('therapy');
             $table->string('therapy_details');

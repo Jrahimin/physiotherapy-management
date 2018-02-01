@@ -72,7 +72,7 @@
                           <select name="patientId" id="patientId">
                               <option value="">--বাছাই করুন--</option>
                               @foreach($patients as $patient)
-                                  <option value="{{$patient->id}}">{{$patient->id}}</option>
+                                  <option value="{{$patient->id}}">{{$patient->id}} {{$patient->name}}</option>
                               @endforeach
                           </select>
                       </div>						
@@ -178,7 +178,7 @@
 
 	<script>
 		$(document).ready(function() {
-			$('#patient').select2();
+			$('#patientId').select2();
 		});
 
 		$('#patient').on('change',function (e) {

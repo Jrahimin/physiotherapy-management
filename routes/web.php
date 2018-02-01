@@ -92,14 +92,11 @@ Route::get('ajax-prescription-therapy',function (Request $request){
     $therapies = $prescription->therapies;
 
     $patient = \App\Patient::find($patient_id);
-    $payments = $patient->payments;
+    $payment = $prescription->payments->last();
     $totalAmount = 0;
-    foreach ($payments as $payment)
-    {
-        $totalAmount = $totalAmount + $payment->amount;
-    }
 
-    
+    if($payment)
+        $totalAmount = $payment->amount;
 
     return Response::json(["therapies"=>$therapies, "totalAmount"=>$totalAmount]);
 });
