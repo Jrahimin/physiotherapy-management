@@ -98,6 +98,11 @@
 						</div>
 						<br/><br/>
 
+						<div class="form-group">
+							<label class="col-md-4 control-label" for="dueOrAdvance"></label>
+						</div>
+						<br/><br/>
+
 						<input type="hidden" id="date" name="date" value="{{\Carbon\Carbon::now('asia/dacca')->toDateString()}}">
 
 					 <div class="form-group">
@@ -183,7 +188,15 @@
 					}
 
 					$('#therapyDiv p').append(therapyContent);
-					$('#amount').val(data.totalAmount);
+					$('#amount').val(data.lastAmount);
+
+					var text = "";
+					if(data.totalDueOAdvance>0)
+						text = "পূর্বের অগ্রিম ";
+					else
+						text = "পূর্বের বকেয়া ";
+					alert(text);
+					$("label[for='dueOrAdvance']").text(text+" "+data.totalDueOAdvance+ " টাকা");
 				},
 			});
 		});
