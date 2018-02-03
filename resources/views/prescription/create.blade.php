@@ -47,10 +47,10 @@
 
                         <div class="form-group">
 
-                            <label for="main_disease" class="col-md-4 control-label">প্রধান রোগ</label>
+                            <label for="main_disease_id" class="col-md-4 control-label">প্রধান রোগ</label>
 
                             <div class="col-md-6">
-                                <select class="col-md-12" name="main_disease" id="main_disease">
+                                <select class="col-md-12" name="main_disease_id" id="main_disease_id">
                                     <option value=""> --বাছাই করুন-- </option>
                                     @foreach($diseases as $disease)
                                         <option value="{{$disease->id}}">{{$disease->name}}</option>
@@ -61,10 +61,10 @@
 
                         <div class="form-group">
 
-                            <label for="sub_disease" class="col-md-4 control-label">উপ-রোগ</label>
+                            <label for="sub_disease_id" class="col-md-4 control-label">উপ-রোগ</label>
 
                             <div class="col-md-6">
-                                <select class="col-md-8" name="sub_disease" id="sub_disease">
+                                <select class="col-md-8" name="sub_disease_id" id="sub_disease_id">
                                     <option value="">--বাছাই করুন--</option>
 
                                 </select>
@@ -204,12 +204,12 @@
            $('#addTherapy').append('');
         });
 
-        $('#main_disease').on('change',function (e) {
+        $('#main_disease_id').on('change',function (e) {
 
             //console.log(e);
             var parent_id=e.target.value;
             var option=' ';
-            $('#sub_disease').empty();
+            $('#sub_disease_id').empty();
             $.ajax({
 
                 type: "GET",
@@ -217,14 +217,14 @@
                 data : {'parent_id':parent_id},
                 success : function(data){
                     //  console.log('success');
-                    //  console.log(data);
+                    console.log(data);
                     option+='<option value="" selected disabled>--বাছাই করুন--</option>';
                     for(var i=0;i<data.length;i++)
                     {
                         option+='<option value="'+data[i].id+'">'+data[i].name+'</option>';
                     }
 
-                    $('#sub_disease').append(option);
+                    $('#sub_disease_id').append(option);
                 },
                 error:function()
                 {

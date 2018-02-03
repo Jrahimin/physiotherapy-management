@@ -34,7 +34,7 @@ class PrescriptionController extends Controller
 
         $therapies = $prescription->therapies;
 
-        $diseaseName = Disease::find($request->main_disease);
+        $diseaseName = Disease::find($request->main_disease_id);
         $diseaseName = $diseaseName->name;
         $patient = $prescription->patient;
 

@@ -88,10 +88,11 @@ Route::get('ajax-prescription',function (Request $request){
 });
 Route::get('ajax-prescription-therapy',function (Request $request){
     $patient_id=$request::input(['patient_id']);
+    $patient = \App\Patient::find($patient_id);
     $prescription = \App\Prescription::where('patient_id', $patient_id)->orderBy('id','DESC')->first();
     $therapies = $prescription->therapies;
 
-    $payments = $prescription->payments;
+    $payments = $patient->payments;
     $payment = $prescription->payments->last();
     $totalDueOAdvance = 0;
     $lastAmount = 0;

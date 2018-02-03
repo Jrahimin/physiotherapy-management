@@ -195,7 +195,7 @@
 						text = "পূর্বের অগ্রিম ";
 					else
 						text = "পূর্বের বকেয়া ";
-					
+
 					$("label[for='dueOrAdvance']").text(text+" "+data.totalDueOAdvance+ " টাকা");
 				},
 			});
