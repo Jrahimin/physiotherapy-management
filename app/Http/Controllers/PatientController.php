@@ -73,6 +73,7 @@ class PatientController extends Controller
 
         //validating data
         $this->validate($request,[
+            'user_id'=>'required|integer',
             'amount'=>'required|numeric',
             'paid'=>'required|numeric',
             'patient_id'=>'required|integer',

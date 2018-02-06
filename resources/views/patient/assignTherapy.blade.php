@@ -36,7 +36,7 @@
 							<label for="patient_id" class="col-md-4 control-label">থেরাপি প্রদানকারীর নাম</label>
 
 							<div class="col-md-6">
-								<select name="user_id" id="user_id">
+								<select name="user_id" id="user_id" required="required">
 									<option value=""> --বাছাই করুন-- </option>
 									@foreach($users as $user)
 										<option value="{{$user->id}}">আইডি : {{$user->id}}, {{$user->name}}</option>
