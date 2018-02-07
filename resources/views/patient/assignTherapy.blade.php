@@ -13,6 +13,13 @@
 	<div class="container">
 		<br/><br/><br/>
 
+<form method="post" action="{{route('prescription.show')}}">
+	{{ csrf_field() }}
+
+	<input type="hidden" name="patient" id="patient" value="">
+	<input type="submit" formtarget="_blank" class="btn btn-success" value="প্রেসক্রিপশন" style="margin-left: 75.5%">
+</form>
+
 {!! Form::open(['method'=>'POST','action'=>'PatientController@assignTherapyStore']) !!}
 {{ csrf_field() }}
 
@@ -169,6 +176,7 @@
 	});
 
 		$('#patient_id').on('change',function (e) {
+		    $('#patient').val(e.target.value);
 			var patient_id=e.target.value;
 			var therapyContent='';
 			var therapyIdContent = '';

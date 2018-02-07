@@ -52,6 +52,7 @@ Route::group(['middleware'=>'auth'],function () {
 
     Route::get('prescription/create','PrescriptionController@create')->name('prescription.create');
     Route::post('prescription/store','PrescriptionController@store')->name('prescription.store');
+    Route::post('prescription/show','PrescriptionController@show')->name('prescription.show');
     
 });
 

@@ -40,4 +40,15 @@ class PrescriptionController extends Controller
 
         return view('prescription/show', compact('prescription', 'therapies', 'patient','diseaseName'));
     }
+
+    public function show(Request $request)
+    {
+        $patient=Patient::find($request->patient);
+
+        $prescription = Prescription::where('patient_id', $request->patient)->orderBy('id','DESC')->first();
+
+        $therapies = $prescription->therapies;
+
+        return view('prescription.show',compact('prescription', 'therapies', 'patient'));
+    }
 }

@@ -1,13 +1,15 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
--- http://www.phpmyadmin.net
+-- version 4.7.3
+-- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Feb 01, 2018 at 11:20 PM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.19
+-- Host: localhost:3306
+-- Generation Time: Feb 07, 2018 at 06:39 AM
+-- Server version: 5.6.38
+-- PHP Version: 5.6.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -17,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `physiotherapy`
+-- Database: `banglaso_physiotherapy`
 --
 
 -- --------------------------------------------------------
@@ -146,7 +148,9 @@ INSERT INTO `patients` (`id`, `name`, `age`, `phone`, `doctor_id`, `date`, `imag
 (2, 'rahimin', '34', '12345678901', 1, '2017-11-08', '151020583421850303_1857731247585240_66952304_n.jpg', '2017-11-08 23:37:14', '2017-11-08 23:37:14', 0),
 (3, 'sjsksk', '23', 'aka', 2, '2017-11-08', '151029484121850303_1857731247585240_66952304_n.jpg', '2017-11-10 00:20:41', '2017-11-10 00:20:41', 0),
 (4, 'আজগর', '২২', '০১৯৮৭৬৭৬৫৪৩', 2, '2017-11-11', '1510405302DSC00131-9 - Copy (4).JPG', '2017-11-11 07:01:42', '2017-11-11 07:01:42', 0),
-(5, 'জামিন', '22', '09009988987', 4, '2017-11-13', '1510558277Welcome Scan.jpg', '2017-11-13 01:31:17', '2017-11-13 01:31:17', 500);
+(5, 'জামিন', '22', '09009988987', 4, '2017-11-13', '1510558277Welcome Scan.jpg', '2017-11-13 01:31:17', '2017-11-13 01:31:17', 500),
+(6, 'মোঃ শফিকুল ইসলাম', '৪০', '০১৭২২৩৪১৯৬২', 4, '2018-02-05', '1517842557robiul.png', '2018-02-05 08:55:57', '2018-02-05 08:55:57', 500),
+(7, 'Shofikul islam', '40', '01819318726', 4, '2018-02-05', '1517842870robiul.png', '2018-02-05 09:01:10', '2018-02-05 09:01:10', 500);
 
 -- --------------------------------------------------------
 
@@ -175,7 +179,43 @@ INSERT INTO `patient_therapy` (`id`, `user_id`, `patient_id`, `therapy_id`, `tim
 (3, 7, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 6),
 (4, 7, 5, 7, 'বিকাল', '2018-02-02', 0, NULL, NULL, 6),
 (5, 7, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 7),
-(6, 7, 5, 7, 'বিকাল', '2018-02-02', 0, NULL, NULL, 7);
+(6, 7, 5, 7, 'বিকাল', '2018-02-02', 0, NULL, NULL, 7),
+(7, 1, 5, 2, 'বিকাল', '2018-02-02', 0, NULL, NULL, 8),
+(8, 1, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 8),
+(9, 1, 5, 2, 'বিকাল', '2018-02-02', 0, NULL, NULL, 9),
+(10, 1, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 9),
+(11, 1, 5, 2, 'বিকাল', '2018-02-02', 0, NULL, NULL, 10),
+(12, 1, 5, 3, 'বিকাল', '2018-02-02', 0, NULL, NULL, 10),
+(13, 1, 5, 2, '2pm', '2018-02-02', 0, NULL, NULL, 11),
+(14, 1, 5, 3, '2pm', '2018-02-02', 0, NULL, NULL, 11),
+(15, 1, 5, 2, 'সকাল', '2018-02-03', 0, NULL, NULL, 12),
+(16, 1, 5, 3, 'সকাল', '2018-02-03', 0, NULL, NULL, 12),
+(17, 1, 5, 2, '2pm', '2018-02-04', 0, NULL, NULL, 13),
+(18, 1, 5, 3, '2pm', '2018-02-04', 0, NULL, NULL, 13),
+(19, 1, 5, 2, '2pm', '2018-02-04', 0, NULL, NULL, 14),
+(20, 1, 5, 3, '2pm', '2018-02-04', 0, NULL, NULL, 14),
+(21, 8, 5, 2, '2pm', '2018-02-04', 0, NULL, NULL, 15),
+(22, 8, 5, 3, '2pm', '2018-02-04', 0, NULL, NULL, 15),
+(23, 1, 5, 2, '2pm', '2018-02-04', 0, NULL, NULL, 16),
+(24, 1, 5, 3, '2pm', '2018-02-04', 0, NULL, NULL, 16),
+(25, 2, 4, 2, '2pm', '2018-02-04', 0, NULL, NULL, 17),
+(26, 7, 4, 2, '2pm', '2018-02-04', 0, NULL, NULL, 18),
+(27, 1, 5, 2, '2pm', '2018-02-04', 0, NULL, NULL, 19),
+(28, 1, 5, 3, '2pm', '2018-02-04', 0, NULL, NULL, 19),
+(29, 1, 4, 3, '2pm', '2018-02-04', 0, NULL, NULL, 20),
+(30, 1, 4, 2, '2pm', '2018-02-04', 0, NULL, NULL, 20),
+(31, 7, 4, 3, '2pm', '2018-02-04', 0, NULL, NULL, 21),
+(32, 7, 4, 2, '2pm', '2018-02-04', 0, NULL, NULL, 21),
+(33, 7, 4, 3, '2pm', '2018-02-04', 0, NULL, NULL, 22),
+(34, 7, 4, 2, '2pm', '2018-02-04', 0, NULL, NULL, 22),
+(35, 6, 4, 3, '2pm', '2018-02-04', 0, NULL, NULL, 23),
+(36, 6, 4, 2, '2pm', '2018-02-04', 0, NULL, NULL, 23),
+(37, 7, 4, 3, '4pm', '2018-02-04', 0, NULL, NULL, 24),
+(38, 1, 4, 3, '4pm', '2018-02-04', 0, NULL, NULL, 25),
+(39, 8, 6, 3, '2pm', '2018-02-05', 0, NULL, NULL, 26),
+(40, 8, 6, 3, '2pm', '2018-02-05', 0, NULL, NULL, 27),
+(41, 8, 6, 3, '2pm', '2018-02-05', 0, NULL, NULL, 28),
+(42, 8, 6, 3, '2pm', '2018-02-05', 0, NULL, NULL, 29);
 
 -- --------------------------------------------------------
 
@@ -203,8 +243,30 @@ CREATE TABLE `payments` (
 --
 
 INSERT INTO `payments` (`id`, `amount`, `paid`, `due_or_advance`, `patient_id`, `prescription_id`, `created_at`, `updated_at`, `date`, `time`, `user_id`, `status`) VALUES
-(6, 22000, 18000, -4000, 5, 23, '2018-02-01 15:25:05', '2018-02-01 15:25:05', '2018-02-02', 'বিকাল', 7, 0),
-(7, 22000, 23000, 1000, 5, 23, '2018-02-01 15:25:30', '2018-02-01 15:25:30', '2018-02-02', 'বিকাল', 7, 0);
+(6, 22000, 18000, -4000, 5, 23, '2018-02-01 15:25:05', '2018-02-01 15:25:05', '2018-02-02', 'বিকাল', 7, 1),
+(7, 22000, 23000, 1000, 5, 23, '2018-02-01 15:25:30', '2018-02-01 15:25:30', '2018-02-02', 'বিকাল', 7, 0),
+(8, 22000, 20000, -2000, 5, 27, '2018-02-01 16:31:42', '2018-02-01 16:31:42', '2018-02-02', 'বিকাল', 1, 0),
+(9, 22000, 20000, -2000, 5, 27, '2018-02-01 16:32:53', '2018-02-01 16:32:53', '2018-02-02', 'বিকাল', 1, 0),
+(10, 22000, 20000, -2000, 5, 27, '2018-02-01 16:33:40', '2018-02-01 16:33:40', '2018-02-02', 'বিকাল', 1, 0),
+(11, 22000, 25000, 3000, 5, 27, '2018-02-02 06:25:37', '2018-02-02 06:25:37', '2018-02-02', '2pm', 1, 0),
+(12, 20000, 25000, 5000, 5, 27, '2018-02-03 11:56:05', '2018-02-03 11:56:05', '2018-02-03', 'সকাল', 1, 1),
+(13, 20000, 20000, 0, 5, 27, '2018-02-03 12:33:18', '2018-02-03 12:33:18', '2018-02-04', '2pm', 1, 0),
+(14, 20000, 6000, -14000, 5, 27, '2018-02-03 12:42:04', '2018-02-03 12:42:04', '2018-02-04', '2pm', 1, 0),
+(15, 20000, 16000, -4000, 5, 27, '2018-02-03 13:11:22', '2018-02-03 13:11:22', '2018-02-04', '2pm', 8, 0),
+(16, 20000, 36000, 16000, 5, 27, '2018-02-03 13:14:25', '2018-02-03 13:14:25', '2018-02-04', '2pm', 1, 0),
+(17, 4000, 6000, 2000, 4, 28, '2018-02-03 13:25:06', '2018-02-03 13:25:06', '2018-02-04', '2pm', 2, 0),
+(18, 4000, 8000, 4000, 4, 28, '2018-02-03 13:27:54', '2018-02-03 13:27:54', '2018-02-04', '2pm', 7, 0),
+(19, 20000, 25000, 5000, 5, 27, '2018-02-03 13:40:54', '2018-02-03 13:40:54', '2018-02-04', '2pm', 1, 0),
+(20, 7000, 6000, -1000, 4, 29, '2018-02-03 13:48:14', '2018-02-03 13:48:14', '2018-02-04', '2pm', 1, 0),
+(21, 7000, 9000, 2000, 4, 29, '2018-02-03 21:31:08', '2018-02-03 21:31:08', '2018-02-04', '2pm', 7, 0),
+(22, 7000, 1000, -6000, 4, 29, '2018-02-03 21:34:16', '2018-02-03 21:34:16', '2018-02-04', '2pm', 7, 0),
+(23, 7000, 4000, -3000, 4, 29, '2018-02-03 22:38:09', '2018-02-03 22:38:09', '2018-02-04', '2pm', 6, 0),
+(24, 5000, 5000, 0, 4, 30, '2018-02-03 22:40:32', '2018-02-03 22:40:32', '2018-02-04', '4pm', 7, 0),
+(25, 5000, 6000, 1000, 4, 30, '2018-02-03 22:41:17', '2018-02-03 22:41:17', '2018-02-04', '4pm', 1, 0),
+(26, 500, 500, 0, 6, 32, '2018-02-05 08:58:07', '2018-02-05 08:58:07', '2018-02-05', '2pm', 8, 1),
+(27, 500, 400, -100, 6, 33, '2018-02-05 09:17:24', '2018-02-05 09:17:24', '2018-02-05', '2pm', 8, 0),
+(28, 300, 400, 100, 6, 33, '2018-02-05 09:18:17', '2018-02-05 09:18:17', '2018-02-05', '2pm', 8, 0),
+(29, 300, 300, 0, 6, 33, '2018-02-05 09:34:26', '2018-02-05 09:34:26', '2018-02-05', '2pm', 8, 0);
 
 -- --------------------------------------------------------
 
@@ -234,7 +296,14 @@ INSERT INTO `prescriptions` (`id`, `main_disease_id`, `sub_disease_id`, `history
 (24, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:48:16', '2018-02-01 15:48:16'),
 (25, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:48:44', '2018-02-01 15:48:44'),
 (26, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:49:16', '2018-02-01 15:49:16'),
-(27, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:49:27', '2018-02-01 15:49:27');
+(27, '2', '3', 'long term', '2018-02-02', 5, '2018-02-01 15:49:27', '2018-02-01 15:49:27'),
+(28, '4', '5', 'abc', '2018-02-04', 4, '2018-02-03 13:19:04', '2018-02-03 13:19:04'),
+(29, '4', '5', 'abc', '2018-02-04', 4, '2018-02-03 13:38:36', '2018-02-03 13:38:36'),
+(30, '4', '5', 'ab', '2018-02-04', 4, '2018-02-03 22:39:10', '2018-02-03 22:39:10'),
+(31, '2', '3', 'abc', '2018-02-05', 4, '2018-02-05 08:50:01', '2018-02-05 08:50:01'),
+(32, '2', '3', 'Back pain', '2018-02-05', 6, '2018-02-05 08:56:59', '2018-02-05 08:56:59'),
+(33, '2', '3', 'abcd', '2018-02-05', 6, '2018-02-05 09:00:02', '2018-02-05 09:00:02'),
+(34, '2', '3', 'abc', '2018-02-05', 7, '2018-02-05 09:02:55', '2018-02-05 09:02:55');
 
 -- --------------------------------------------------------
 
@@ -266,7 +335,15 @@ INSERT INTO `prescription_therapy` (`id`, `prescription_id`, `therapy_id`, `ther
 (30, 26, 2, 'বিকাল ৪টা', 3, NULL, NULL),
 (31, 26, 3, 'বিকাল ৪টা', 2, NULL, NULL),
 (32, 27, 2, 'বিকাল ৪টা', 3, NULL, NULL),
-(33, 27, 3, 'বিকাল ৪টা', 2, NULL, NULL);
+(33, 27, 3, 'বিকাল ৪টা', 2, NULL, NULL),
+(34, 28, 2, '2pm', 4, NULL, NULL),
+(35, 29, 3, '2pm', 4, NULL, NULL),
+(36, 29, 2, '2pm', 3, NULL, NULL),
+(37, 30, 3, '4pm', 10, NULL, NULL),
+(38, 31, 8, '2pm', 4, NULL, NULL),
+(39, 32, 3, '2pm', 2, NULL, NULL),
+(40, 33, 3, '2pm', 3, NULL, NULL),
+(41, 34, 3, '2pm', 3, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -340,8 +417,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `password`, `type_id`, `remember_token`, `created_at`, `updated_at`) VALUES
 (1, 'ami', 'ami@g.com', '$2y$10$9QZRSD39dqKc7nF36jZ.B.MHeGxaeub3q7IEM185bSO3WSEgDyEu2', 1, 'NrDsYYjVvp0hWu7g6BENOd9FcpkWUBTh6lR771uejCOx39rdTFHcLt2Qxddi', '2017-11-08 02:05:45', '2017-11-08 02:05:45'),
 (2, 'Aulipriya Mukhles', 'apromona@yahoo.com', '$2y$10$cgPbUyob13wBy7m62Uotz.C920Y8LcbAy.Aoz3Cp1z6WxXE79yK0O', 2, 'QgTb9vLHNXPvtzQGdfaxZq43N1wt4Z0jD9J3HmSPRNSSjpiMurHnPDgCV22Z', '2017-11-08 03:06:03', '2017-11-23 12:01:41'),
-(6, 'pr', 'pr@gmail.com', '$2y$10$9QZRSD39dqKc7nF36jZ.B.MHeGxaeub3q7IEM185bSO3WSEgDyEu2', 1, 'rb0sRaXQxaDHpEQitAs1qdTlF2h3YNyxkJrkhJhJfARMRkQqezAi09PdXZfZ', NULL, NULL),
-(7, 'Jr', 'jr@gmail.com', '$2y$10$PMLPbSuFIPp2f86/4u/kK.i5kIPCdfuhW50bfKKiIDrTKb1othDBy', 1, NULL, '2017-12-31 01:45:36', '2017-12-31 01:45:36');
+(6, 'pr', 'pr@gmail.com', '$2y$10$9QZRSD39dqKc7nF36jZ.B.MHeGxaeub3q7IEM185bSO3WSEgDyEu2', 1, 'Z8weUfXMjC6fy7icfn5MqzThqOYjw0K8ZTA1xGA5u8sM14LFTRFMSwy9aYwn', NULL, NULL),
+(7, 'আমি', 'ami@gmail.com', '$2y$10$c/e9xcZDz1JIw0wtIhPcyOaqZzmO4zbXDOlMeSos9hp3nfHI1LWb2', 1, 'nsRvU7KJzIk7uPwTU7euh5Dng9kgOri0Qs4z0SmtRJjJl2R8vcSbWIPFmHKR', '2017-11-30 00:14:41', '2017-11-30 00:14:41'),
+(8, 'Raju', 'raju.syau@gmail.com', '$2y$10$v.IrJsGcO6ORItd19CU1XuXgRjoXCZQwLufjPqFrDDxN0/q.Pmr1a', 1, 'DeJgNXEub20Dpm0SQW0RUj8W8IwEkjsdmFDBaW9LmRNxSOxyhZxRiG7RfZsH', '2017-11-30 16:20:08', '2017-11-30 16:20:08');
 
 --
 -- Indexes for dumped tables
@@ -437,27 +515,27 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT for table `patient_therapy`
 --
 ALTER TABLE `patient_therapy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `payments`
 --
 ALTER TABLE `payments`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 --
 -- AUTO_INCREMENT for table `prescriptions`
 --
 ALTER TABLE `prescriptions`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 --
 -- AUTO_INCREMENT for table `prescription_therapy`
 --
 ALTER TABLE `prescription_therapy`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=34;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 --
 -- AUTO_INCREMENT for table `therapies`
 --
@@ -472,16 +550,7 @@ ALTER TABLE `types`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `prescriptions`
---
-ALTER TABLE `prescriptions`
-  ADD CONSTRAINT `prescriptions_patient_id_foreign` FOREIGN KEY (`patient_id`) REFERENCES `patients` (`id`);
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
