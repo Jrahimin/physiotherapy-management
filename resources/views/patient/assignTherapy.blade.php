@@ -16,7 +16,7 @@
 <form method="post" action="{{route('prescription.show')}}">
 	{{ csrf_field() }}
 
-	<input type="hidden" name="patient" id="patient" value="">
+	<input type="hidden" name="patient" id="patient" value="" required="required">
 	<input type="submit" formtarget="_blank" class="btn btn-success" value="প্রেসক্রিপশন" style="margin-left: 75.5%">
 </form>
 

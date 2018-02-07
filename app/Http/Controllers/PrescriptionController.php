@@ -21,6 +21,7 @@ class PrescriptionController extends Controller
 
     function store(Request $request)
     {
+
         $i = 0;
         $prescription = Prescription::create($request->all());
 
@@ -43,6 +44,9 @@ class PrescriptionController extends Controller
 
     public function show(Request $request)
     {
+        $this->validate($request, [
+           'patient'=>'required|integer',
+        ]);
         $patient=Patient::find($request->patient);
 
         $prescription = Prescription::where('patient_id', $request->patient)->orderBy('id','DESC')->first();
